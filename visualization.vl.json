@@ -1,0 +1,42 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Total Litres of Pure Alcohol Consumed in 2010",
+  "width": 800,
+  "height": 600,
+  "data": {
+    "url": "https://raw.githubusercontent.com/nlee3004/test/main/custom.geo.topojson",
+    "format": {"type": "topojson", "feature": "custom.geo"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.name",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/nlee3004/test/main/drinks.csv"
+        },
+        "key": "country",
+        "fields": ["total_litres_of_pure_alcohol"]
+      }
+    },
+    {"calculate": "datum.total_litres_of_pure_alcohol", "as": "Alcohol"}
+  ],
+  "projection": {"type": "equalEarth"},
+  "mark": {"type": "geoshape"},
+  "encoding": {
+    "color": {
+      "field": "total_litres_of_pure_alcohol",
+      "type": "quantitative",
+      "scale": {"scheme": "purpleblue"},
+      "title": "Total Litres of Pure Alcohol Consumed"
+    },
+    "tooltip": [
+      {"field": "properties.name", "type": "nominal", "title": "Country"},
+      {
+        "field": "total_litres_of_pure_alcohol",
+        "type": "quantitative",
+        "title": "Total Litres of Pure Alcohol Consumed"
+      }
+    ]
+  },
+  "config": {}
+}
