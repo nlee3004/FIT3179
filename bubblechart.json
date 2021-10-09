@@ -1,0 +1,50 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 700,
+  "height": 500,
+  "title": "Population Density of Different Countries",
+  "data": {
+    "url": "https://raw.githubusercontent.com/nlee3004/FIT3179/main/List%20of%20Countries%20by%20number%20of%20Internet%20Users%20-%20Sheet1.csv"
+  },
+  "mark": "circle",
+  "params": [
+    {
+      "name": "Country or Area",
+      "select": {"type": "point", "fields": ["Country or Area"]},
+      "bind": "legend"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Population",
+      "type": "quantitative",
+      "title": "Population",
+      "axis": {"tickCount": 6},
+      "scale": {"type": "log", "domain": [1000, 2000000000]}
+    },
+    "y": {
+      "field": "Internet Users",
+      "title": "Internet Users",
+      "type": "quantitative",
+      "axis": {"tickCount": 6},
+      "scale": {"type": "log", "domain": [100, 1000000000]}
+    },
+    "color": {"field": "Country or Area", "type": "nominal"},
+    "size": {
+      "field": "Rank",
+      "type": "quantitative",
+      "scale": {"type": "log", "domain": [1, 216]}
+    },
+    "tooltip": [
+      {"field": "Country or Area", "type": "nominal"},
+      {"field": "Population", "type": "quantitative", "format": ","},
+      {"field": "Internet Users", "type": "quantitative", "format": ","},
+      {"field": "Density", "type": "quantitative", "format": ","}
+    ],
+    "opacity": {
+      "condition": {"param": "Country or Area", "value": 1},
+      "value": 0.1
+    }
+  },
+  "config": {}
+}
